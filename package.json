@@ -1,0 +1,12 @@
+{
+  "name": "ami2mqtt",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Stefan Gofferje <stefan@gofferje.net> (https://www.gofferje.net/)",
+  "license": " 	GPL-3.0-or-later",
+  "description": "Bridge to convert Asterisk Manager events to MQTT messages"
+}
