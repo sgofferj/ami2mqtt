@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 
 const ami = require('asterisk-manager');
 const mqtt = require('mqtt')
@@ -7,7 +7,7 @@ const amiPort = (typeof process.env.AMI_PORT !== 'undefined') ? process.env.AMI_
 const amiHost = (typeof process.env.AMI_HOST !== 'undefined') ? process.env.AMI_HOST : 'asterisk';
 const amiUser = (typeof process.env.AMI_USERNAME !== 'undefined') ? process.env.AMI_USERNAME : 'asterisk';
 const amiPass = (typeof process.env.AMI_PASSWORD !== 'undefined') ? process.env.AMI_PASSWORD : 'manager';
-const mqttURL = (typeof process.env.MQTT_URL !== 'undefined') ? process.env.MQTT_URL : 'mqtt';
+const mqttURL = (typeof process.env.MQTT_URL !== 'undefined') ? process.env.MQTT_URL : 'mqtt://mqtt-server.local';
 const mqttUser = (typeof process.env.MQTT_USERNAME !== 'undefined') ? process.env.MQTT_USERNAME : null;
 const mqttPass = (typeof process.env.MQTT_PASSWORD !== 'undefined') ? process.env.MQTT_PASSWORD : null;
 
@@ -21,6 +21,10 @@ asterisk.on('successfulauth', function(evt) {
         "Action":"DeviceStateList",
         "ActionID":"getState"
     })
+    asterisk.action({
+        "Action":"ExtensionStateList",
+        "ActionID":"getExtensions"
+    })
 });
 
 asterisk.on('devicestatechange', function(evt) {
@@ -30,5 +34,13 @@ asterisk.on('devicestatechange', function(evt) {
     let topic = 'pbx/devstate/'+tDev;
     console.log(topic+" "+evt.state);
     mqtt_client.publish(topic,evt.state);
+});
+
+asterisk.on('extensionstatus', function(evt) {
+    console.log(evt);
+    let ext = evt.exten.toLowerCase();
+    let topic = 'pbx/exten/'+ext;
+    console.log(topic+" "+evt.status);
+    mqtt_client.publish(topic,evt.status);
 });
 
