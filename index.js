@@ -28,7 +28,6 @@ asterisk.on('successfulauth', function(evt) {
 });
 
 asterisk.on('devicestatechange', function(evt) {
-    console.log(evt);
     let dev = evt.device.toLowerCase();
     let tDev = dev.replace(/:/g,'/');
     let topic = 'pbx/devstate/'+tDev;
@@ -37,10 +36,12 @@ asterisk.on('devicestatechange', function(evt) {
 });
 
 asterisk.on('extensionstatus', function(evt) {
-    console.log(evt);
     let ext = evt.exten.toLowerCase();
     let topic = 'pbx/exten/'+ext;
     console.log(topic+" "+evt.status);
     mqtt_client.publish(topic,evt.status);
 });
 
+asterisk.on('managerevent', function(evt) {
+    console.log(evt);
+});
