@@ -7,6 +7,9 @@
   },
   "keywords": [],
   "author": "Stefan Gofferje <stefan@gofferje.net> (https://www.gofferje.net/)",
-  "license": " 	GPL-3.0-or-later",
-  "description": "Bridge to convert Asterisk Manager events to MQTT messages"
+  "license": "GPL-3.0-or-later",
+  "description": "Bridge to convert Asterisk Manager events to MQTT messages",
+  "dependencies": {
+    "asterisk-manager": "^0.2.0"
+  }
 }
