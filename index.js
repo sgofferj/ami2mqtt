@@ -43,5 +43,5 @@ asterisk.on('extensionstatus', function(evt) {
 });
 
 asterisk.on('managerevent', function(evt) {
-    console.log(evt);
+    console.log(JSON.stringify(evt));
 });
