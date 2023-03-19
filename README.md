@@ -1,3 +1,5 @@
+[![Build and publish the container image](https://github.com/sgofferj/ami2mqtt/actions/workflows/actions.yml/badge.svg?branch=master)](https://github.com/sgofferj/ami2mqtt/actions/workflows/actions.yml)
+
 # ami2mqtt
 An Asterisk Manager event to MQTT bridge
 
