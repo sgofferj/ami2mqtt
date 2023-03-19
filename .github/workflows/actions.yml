@@ -26,6 +26,6 @@ jobs:
 
           - name: 'Build Inventory Image'
             run: |
-              docker build . --tag ghcr.io/sgofferj/ami2mqtt/store:latest
-              docker push ghcr.io/sgofferj/ami2mqtt/store:latest
+              docker build . --tag ghcr.io/sgofferj/store:latest
+              docker push ghcr.io/sgofferj/store:latest
  
