@@ -1,17 +1,32 @@
 name: CI
 run-name: ami2mqtt build & push
 on: [push]
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
 jobs:
-    build-and-publish-latest:
+      push-store-image:
         runs-on: ubuntu-latest
-        if: github.ref == 'refs/heads/master' # Running this job only for master branch
-
+        defaults:
+          run:
+            working-directory: './Store'
         steps:
-            - uses: actions/checkout@v2 # Checking out the repo
+          - name: 'Checkout GitHub Action'
+            uses: actions/checkout@main
 
-            - name: Build and Publish latest Docker image
-              uses: TCPShield/gp-docker-action@1.1.13
-              with:
-                  github-token: ${{ secrets.GITHUB_TOKEN }} # Provide GITHUB_TOKEN to login into the GitHub Packages
-                  image-name: my-cool-service # Provide only Docker image name, tag will be automatically set to latest
-                  dockerfile: Dockerfile_server
+          - name: 'Login to GitHub Container Registry'
+            uses: docker/login-action@v1
+            with:
+              registry: ghcr.io
+              username: ${{github.actor}}
+              password: ${{secrets.GITHUB_TOKEN}}
+
+          - name: 'Build Inventory Image'
+            run: |
+              docker build . --tag ghcr.io/sgofferj/ami2mqtt/store:latest
+              docker push ghcr.io/sgofferj/ami2mqtt/store:latest
+ 
