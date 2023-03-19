@@ -1,6 +1,5 @@
 name: CI
 run-name: ami2mqtt build & push
-on: [push]
 
 on:
   push:
