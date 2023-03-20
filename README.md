@@ -35,7 +35,7 @@ Examples:
 * Custom:Night -> `pbx/devstate/custom/night`
 * MWI:1000@default -> `pbx/devstate/mwi/1000@default`
 ### ExtensionStatus
-ExtensionStatus events are published as `pbx/exten/<extension>`. Extension names are converted to lowercase.
+ExtensionStatus events are published as `pbx/exten/<context>/<extension>`. Extension names are converted to lowercase.
 Examples:
 * 1234 in context internal -> `pbx/exten/internal/1234`
 
