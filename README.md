@@ -26,3 +26,36 @@ The following values are supported and can be provided either as environment var
 | MQTT_USERNAME | null | MQTT user name
 | MQTT_PASSWORD | null | MQTT password |
 
+## Container use
+### Image
+The image is built for AMD64 and ARM64 and pushed to ghcr.io: *ghcr.io/sgofferj/ami2mqtt:latest*
+### Docker
+First, rename .env.example to .env and edit according to your needs \
+Create and start the container:
+```
+docker run -d --env-file .env --name ami2mqtt --restart always ghcr.io/sgofferj/ami2mqtt:latest
+```
+
+### Docker compose
+Here is an example for a docker-compose.yml file:
+```
+version: '2.0'
+
+services:
+  ami2mqtt:
+    image: ghcr.io/sgofferj/ami2mqtt:latest
+    restart: always
+    networks:
+      - default
+    environment:
+      - AMI_HOST=asterisk
+      - AMI_PORT=5038
+      - AMI_USERNAME=asterisk
+      - AMI_PASSWORD=manager
+      - MQTT_URL=mqtt://mqtt-server.local
+      - MQTT_USERNAME=mqtt
+      - MQTT_PASSWORD=mqtt
+
+networks:
+  default:
+```
