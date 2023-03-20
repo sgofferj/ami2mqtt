@@ -26,6 +26,19 @@ The following values are supported and can be provided either as environment var
 | MQTT_USERNAME | null | MQTT user name
 | MQTT_PASSWORD | null | MQTT password |
 
+## MQTT topics
+Currently, everything is published under the topic `pbx/#`. I might make this configurable later.
+### DeviceStateChange
+DeviceStateChange events are published as `pbx/devstate/<device>`. Device names are converted to lowercase, colons are replaced with slashes.
+Examples:
+* SIP/1234 -> `pbx/devstate/sip/1234`
+* Custom:Night -> `pbx/devstate/custom/night`
+* MWI:1000@default -> `pbx/devstate/mwi/1000@default`
+### ExtensionStatus
+ExtensionStatus events are published as `pbx/exten/<extension>`. Extension names are converted to lowercase.
+Examples:
+* 1234 -> `pbx/exten/1234`
+
 ## Container use
 ### Image
 The image is built for AMD64 and ARM64 and pushed to ghcr.io: *ghcr.io/sgofferj/ami2mqtt:latest*
