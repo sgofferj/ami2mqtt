@@ -28,6 +28,7 @@ asterisk.on('fullybooted', function(evt) {
 });
 
 asterisk.on('devicestatechange', function(evt) {
+    console.log(JSON.stringify(evt));
     let dev = evt.device.toLowerCase();
     let tDev = dev.replace(/:/g,'/');
     let topic = 'pbx/devstate/'+tDev;
@@ -35,6 +36,7 @@ asterisk.on('devicestatechange', function(evt) {
 });
 
 asterisk.on('extensionstatus', function(evt) {
+    console.log(JSON.stringify(evt));
     let ext = evt.exten.toLowerCase();
     let topic = 'pbx/exten/'+ext;
     mqtt_client.publish(topic,evt.status);
