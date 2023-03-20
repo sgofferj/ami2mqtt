@@ -37,7 +37,7 @@ Examples:
 ### ExtensionStatus
 ExtensionStatus events are published as `pbx/exten/<extension>`. Extension names are converted to lowercase.
 Examples:
-* 1234 -> `pbx/exten/1234`
+* 1234 in context internal -> `pbx/exten/internal/1234`
 
 ## Container use
 ### Image

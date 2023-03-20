@@ -38,7 +38,8 @@ asterisk.on('devicestatechange', function(evt) {
 asterisk.on('extensionstatus', function(evt) {
     console.log(JSON.stringify(evt));
     let ext = evt.exten.toLowerCase();
-    let topic = 'pbx/exten/'+ext;
+    let cont = evt.context;
+    let topic = 'pbx/exten/'+cont+'/'+ext;
     mqtt_client.publish(topic,evt.status);
 });
 
