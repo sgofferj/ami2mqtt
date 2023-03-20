@@ -16,7 +16,7 @@ const mqtt_client = new mqtt.connect(mqttURL,{'username':mqttUser,'password':mqt
 
 asterisk.keepConnected();
 
-asterisk.on('successfulauth', function(evt) {
+asterisk.on('fullybooted', function(evt) {
     asterisk.action({
         "Action":"DeviceStateList",
         "ActionID":"getState"
