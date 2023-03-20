@@ -31,14 +31,12 @@ asterisk.on('devicestatechange', function(evt) {
     let dev = evt.device.toLowerCase();
     let tDev = dev.replace(/:/g,'/');
     let topic = 'pbx/devstate/'+tDev;
-    console.log(topic+" "+evt.state);
     mqtt_client.publish(topic,evt.state);
 });
 
 asterisk.on('extensionstatus', function(evt) {
     let ext = evt.exten.toLowerCase();
     let topic = 'pbx/exten/'+ext;
-    console.log(topic+" "+evt.status);
     mqtt_client.publish(topic,evt.status);
 });
 
