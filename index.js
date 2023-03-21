@@ -14,13 +14,8 @@ const mqttPass = (typeof process.env.MQTT_PASSWORD !== 'undefined') ? process.en
 const asterisk = new ami(amiPort, amiHost, amiUser, amiPass, true);
 const mqtt_client = new mqtt.connect(mqttURL, { 'username': mqttUser, 'password': mqttPass })
 
-function createSensorDiscoveryTopic(object_id) {
-    let discoveryTopic = "homeassistant/sensor/" + object_id + "/config";
-    return discoveryTopic;
-};
-
-function createSwitchDiscoveryTopic(object_id) {
-    let discoveryTopic = "homeassistant/switch/" + object_id + "/config";
+function createDiscoveryTopic(type,object_id) {
+    let discoveryTopic = "homeassistant/" + type + "/" + object_id + "/config";
     return discoveryTopic;
 };
 
@@ -68,9 +63,9 @@ asterisk.on('devicestatechange', function (evt) {
     let discoveryTopic
     let config = JSON.stringify(createConfig("devstate", uDev, tDev, uID));
     if (tDev.substring(0,6) == "Custom") {
-        discoveryTopic = createSwitchDiscoveryTopic(uID); 
+        discoveryTopic = createDiscoveryTopic("switch",uID); 
     } else {
-        discoveryTopic = createSensorDiscoveryTopic(uID); 
+        discoveryTopic = createDiscoveryTopic("sensor",uID); 
     }
     mqtt_client.publish(discoveryTopic,config);
     mqtt_client.publish(topic, evt.state);
