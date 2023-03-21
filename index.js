@@ -24,26 +24,8 @@ function createSwitchDiscoveryTopic(object_id) {
     return discoveryTopic;
 };
 
-function createSensorConfig(topic, name, device, object_id) {
+function createConfig(topic, name, device, object_id) {
     let config = {
-        "device": {
-            "identifiers": [object_id],
-            "manufacturer": "Asterisk",
-            "model": "Device",
-            "name": "asterisk-"+name
-        },
-        "name": "asterisk-"+name,
-        "payload_off": "NOT_INUSE",
-        "payload_on": "INUSE",
-        "state_topic": "pbx/" + topic + "/" + device,
-        "unique_id": object_id
-    };
-    return config;
-};
-
-function createSwitchConfig(topic, name, device, object_id) {
-    let config = {
-        "command_topic": "pbx/" + topic + "/" + device + "/set",
         "device": {
             "identifiers": [object_id],
             "manufacturer": "Asterisk",
@@ -84,13 +66,11 @@ asterisk.on('devicestatechange', function (evt) {
     let uID = "asterisk-devstate-" + uDev;
     let topic = 'pbx/devstate/' + tDev;
     let discoveryTopic
-    let config
+    let config = JSON.stringify(createConfig("devstate", uDev, tDev, uID));
     if (tDev.substring(0,6) == "Custom") {
         discoveryTopic = createSwitchDiscoveryTopic(uID); 
-        config = JSON.stringify(createSwitchConfig("devstate", uDev, tDev, uID));
     } else {
         discoveryTopic = createSensorDiscoveryTopic(uID); 
-        config = JSON.stringify(createSensorConfig("devstate", uDev, tDev, uID));
     }
     mqtt_client.publish(discoveryTopic,config);
     mqtt_client.publish(topic, evt.state);
@@ -119,6 +99,5 @@ mqtt_client.on('message', function (topic, message) {
             "Variable":"DEVICE_STATE(Custom:"+top[3]+")",
             "Value":newState
         })
-    
     }
 });
