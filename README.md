@@ -29,15 +29,20 @@ The following values are supported and can be provided either as environment var
 ## MQTT topics
 Currently, everything is published under the topic `pbx/#`. I might make this configurable later.
 ### DeviceStateChange
-DeviceStateChange events are published as `pbx/devstate/<device>`. Device names are converted to lowercase, colons are replaced with slashes.
+DeviceStateChange events are published as `pbx/devstate/<device>`. Colons are replaced with slashes.
 Examples:
-* SIP/1234 -> `pbx/devstate/sip/1234`
-* Custom:Night -> `pbx/devstate/custom/night`
-* MWI:1000@default -> `pbx/devstate/mwi/1000@default`
+* SIP/1234 -> `pbx/devstate/SIP/1234`
+* Custom:Night -> `pbx/devstate/Custom/Night`
+* MWI:1000@default -> `pbx/devstate/MWI/1000@default`
 ### ExtensionStatus
-ExtensionStatus events are published as `pbx/exten/<context>/<extension>`. Extension names are converted to lowercase.
-Examples:
+ExtensionStatus events are published as `pbx/exten/<context>/<extension>`.
 * 1234 in context internal -> `pbx/exten/internal/1234`
+### Set DeviceState
+The state of Custom devstates can be set with `pbx/devstate/Custom/<device>/set`
+* Custom:Night -> `pbx/devstate/Custom/Night/set`
+
+## Home Assistant autodiscovery
+For devstate objects [Home Assistant MQTT autodiscovery topics](https://www.home-assistant.io/integrations/mqtt/#mqtt-discovery) are created. Custom devstates are registered as switches and can be switched from Home Assistant between INUSE and NOT_INUSE. All others are registered as sensors.
 
 ## Container use
 ### Image
