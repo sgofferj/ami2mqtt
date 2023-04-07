@@ -33,12 +33,24 @@ function createConfig(topic, name, device, object_id) {
         "state_topic": "pbx/" + topic + "/" + device,
         "unique_id": object_id
     };
+    if (device.substring(0,6) == "Custom") {
+        config["command_topic"] = "pbx/" + topic + "/" + device + "/set";
+    }
+
     return config;
 };
 
 asterisk.keepConnected();
 
 asterisk.on('fullybooted', function (evt) {
+    asterisk.action({
+        "Action": "DeviceStateList",
+        "ActionID": "getState"
+    })
+    asterisk.action({
+        "Action": "ExtensionStateList",
+        "ActionID": "getExtensions"
+    })
     asterisk.action({
         "Action": "DeviceStateList",
         "ActionID": "getState"
