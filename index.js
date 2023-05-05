@@ -79,8 +79,8 @@ asterisk.on('devicestatechange', function (evt) {
     } else {
         discoveryTopic = createDiscoveryTopic("sensor",uID); 
     }
-    mqtt_client.publish(discoveryTopic,config);
-    mqtt_client.publish(topic, evt.state);
+    mqtt_client.publish(discoveryTopic,config,{ qos: 1, retain: true });
+    mqtt_client.publish(topic, evt.state, { qos: 1, retain: true });
 });
 
 asterisk.on('extensionstatus', function (evt) {
@@ -88,7 +88,7 @@ asterisk.on('extensionstatus', function (evt) {
     let ext = evt.exten;
     let cont = evt.context;
     let topic = 'pbx/exten/' + cont + '/' + ext;
-    mqtt_client.publish(topic, evt.status);
+    mqtt_client.publish(topic, evt.status, { qos: 1, retain: true });
 });
 
 asterisk.on('managerevent', function (evt) {
